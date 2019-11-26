@@ -114,7 +114,18 @@ function! battlestar#colorize_rgb(r, g, b)"{{{
 endfunction"}}}
 
 " Actual color generation
-function! battlestar#theme_color_palette(h, s, v)"{{{
+function! battlestar#theme_color_palette_disparate(colors)"{{{
+    let l:colors = { 
+    \   'neutralcolor' : battlestar#colorize(a:colors[0][0], a:colors[0][1], a:colors[0][2]),
+    \   'brightcolor'  : battlestar#colorize(a:colors[1][0], a:colors[1][1], a:colors[1][2]),
+    \   'accentcolor'  : battlestar#colorize(a:colors[2][0], a:colors[2][1], a:colors[2][2]),
+    \   'lightcolor'   : battlestar#colorize(a:colors[3][0], a:colors[3][1], a:colors[3][2]),
+    \   'darkcolor'    : battlestar#colorize(a:colors[4][0], a:colors[4][1], a:colors[4][2]),
+    \   }
+
+    return l:colors
+endfunction"}}}
+function! battlestar#theme_color_palette_homogeneous(h, s, v)"{{{
     let l:colors = { 
     \   'neutralcolor' : battlestar#colorize(a:h[0], a:s, a:v),
     \   'brightcolor'  : battlestar#colorize(a:h[1], a:s, a:v),
@@ -147,11 +158,19 @@ function! battlestar#filler_colors(bg, fg)"{{{
 
     return l:colors
 endfunction"}}}
-function! battlestar#misc_color_palette(h, s, v)"{{{
+function! battlestar#misc_color_palette_homogeneous(h, s, v)"{{{
     let l:colors = { 
     \   'delete'       : battlestar#colorize(a:h[0], a:s, a:v),
     \   'change'       : battlestar#colorize(a:h[1], a:s, a:v),
     \   'add'          : battlestar#colorize(a:h[2], a:s, a:v),
+    \   }
+    return l:colors
+endfunction"}}}
+function! battlestar#misc_color_palette_disparate(colors)"{{{
+    let l:colors = { 
+    \   'delete'       : battlestar#colorize(a:colors[0][0], a:colors[0][1], a:colors[0][2]),
+    \   'change'       : battlestar#colorize(a:colors[1][0], a:colors[1][1], a:colors[1][2]),
+    \   'add'          : battlestar#colorize(a:colors[2][0], a:colors[2][1], a:colors[2][2]),
     \   }
     return l:colors
 endfunction"}}}
@@ -342,8 +361,17 @@ function! battlestar#airlinecolorset(colors) "{{{
 
 endfunction "}}}
 function! battlestar#palette(theme, filler, misc)"{{{
-    let l:theme =  battlestar#theme_color_palette(a:theme[0], a:theme[1], a:theme[2])
-    call extend(l:theme, battlestar#misc_color_palette(a:misc[0], a:misc[1], a:misc[2]))
+    if len(a:theme) == 3
+        let l:theme =  battlestar#theme_color_palette_homogeneous(a:theme[0], a:theme[1], a:theme[2])
+    else
+        let l:theme =  battlestar#theme_color_palette_disparate(a:theme)
+    endif
+
+    if len(a:misc[1]) == 2
+        call extend(l:theme, battlestar#misc_color_palette_homogeneous(a:misc[0], a:misc[1], a:misc[2]))
+    else
+        call extend(l:theme, battlestar#misc_color_palette_disparate(a:misc))
+    endif
     call extend(l:theme, 
                 \    battlestar#filler_colors(
                 \        battlestar#hsv2rgb(a:filler[0][0], a:filler[0][1], a:filler[0][2]), 
@@ -383,10 +411,18 @@ function! battlestar#setpalette()"{{{
     elseif g:battlestar_theme ==? 'condition two'
         " color defs Generated Green{{{
         let g:battlestar#generated = 1
-        let s:theme = [[190, 100, 70, 130, 40], 50, s:v]
+        let s:theme = [
+            \   [190, 80, s:v], 
+            \   [100, 50, s:v], 
+            \   [ 70, 50, s:v], 
+            \   [130, 50, s:v], 
+            \   [ 40, 50, s:v]]
         let s:bg = [120.6, 30, 6]
         let s:fg = [120.6, 10, 90]
-        let s:misc = [[354, 50, 110], 50, s:v-20]
+        let s:misc = [
+            \   [354, 50, s:v-20], 
+            \   [ 50, 50, s:v-20], 
+            \   [110, 50, s:v-20]]
         "}}}
     elseif g:battlestar_theme ==? 'condition three'
         " color defs Generated Blue{{{
@@ -605,5 +641,56 @@ function! battlestar#setpalette()"{{{
        \ 'airlinecolors' : s:airlinecolors,})
 
     return s:colors
+endfunction"}}}
+function! battlestar#printscheme()"{{{
+    let s:colors = battlestar#setpalette()
+
+    let s:string = ""
+        \   .  "let g:battlestar#generated = 0\n"
+        \   .  "let s:colors = {\n"
+        \   .  "\\ 'lightcolor'   : ['" . s:colors.lightcolor[0]   . "' , '" . s:colors.lightcolor[1]   . "'],\n" 
+        \   .  "\\ 'brightcolor'  : ['" . s:colors.brightcolor[0]  . "' , '" . s:colors.brightcolor[1]  . "'],\n"
+        \   .  "\\ 'darkcolor'    : ['" . s:colors.darkcolor[0]    . "' , '" . s:colors.darkcolor[1]    . "'],\n"
+        \   .  "\\ 'accentcolor'  : ['" . s:colors.accentcolor[0]  . "' , '" . s:colors.accentcolor[1]  . "'],\n"
+        \   .  "\\ 'neutralcolor' : ['" . s:colors.neutralcolor[0] . "' , '" . s:colors.neutralcolor[1] . "'],\n"
+        \   .  "\\\n"
+        \   .  "\\ 'background'   : ['" . s:colors.background[0]   . "' , '" . s:colors.background[1]   . "'],\n"
+        \   .  "\\ 'foreground'   : ['" . s:colors.foreground[0]   . "' , '" . s:colors.foreground[1]   . "'],\n"
+        \   .  "\\\n"
+        \   .  "\\ 'grey01'       : ['" . s:colors.grey01[0]       . "' , '" . s:colors.grey01[1]       . "'],\n"
+        \   .  "\\ 'grey02'       : ['" . s:colors.grey02[0]       . "' , '" . s:colors.grey02[1]       . "'],\n"
+        \   .  "\\ 'grey03'       : ['" . s:colors.grey03[0]       . "' , '" . s:colors.grey03[1]       . "'],\n"
+        \   .  "\\ 'grey04'       : ['" . s:colors.grey04[0]       . "' , '" . s:colors.grey04[1]       . "'],\n"
+        \   .  "\\ 'grey05'       : ['" . s:colors.grey05[0]       . "' , '" . s:colors.grey05[1]       . "'],\n"
+        \   .  "\\ 'grey06'       : ['" . s:colors.grey06[0]       . "' , '" . s:colors.grey06[1]       . "'],\n"
+        \   .  "\\\n"
+        \   .  "\\ 'add'          : ['" . s:colors.add[0]          . "' , '" . s:colors.add[1]          . "'],\n"
+        \   .  "\\ 'change'       : ['" . s:colors.change[0]       . "' , '" . s:colors.change[1]       . "'],\n"
+        \   .  "\\ 'delete'       : ['" . s:colors.delete[0]       . "' , '" . s:colors.delete[1]       . "'],\n"
+        \   .  "\\ }\n\n"
+        \   .  "let s:airlinecolors = {\n"
+        \   .  "\\ '00' : ['" . s:colors.airlinecolors.00[0] . "' , '" . s:colors.airlinecolors.00[1] . "'],\n"
+        \   .  "\\ '01' : ['" . s:colors.airlinecolors.01[0] . "' , '" . s:colors.airlinecolors.01[1] . "'],\n"
+        \   .  "\\\n"
+        \   .  "\\ '02' : ['" . s:colors.airlinecolors.02[0] . "' , '" . s:colors.airlinecolors.02[1] . "'],\n"
+        \   .  "\\ '03' : ['" . s:colors.airlinecolors.03[0] . "' , '" . s:colors.airlinecolors.03[1] . "'],\n"
+        \   .  "\\\n"
+        \   .  "\\ '04' : ['" . s:colors.airlinecolors.04[0] . "' , '" . s:colors.airlinecolors.04[1] . "'],\n"
+        \   .  "\\ '05' : ['" . s:colors.airlinecolors.05[0] . "' , '" . s:colors.airlinecolors.05[1] . "'],\n"
+        \   .  "\\\n"
+        \   .  "\\ '06' : ['" . s:colors.airlinecolors.06[0] . "' , '" . s:colors.airlinecolors.06[1] . "'],\n"
+        \   .  "\\ '07' : ['" . s:colors.airlinecolors.07[0] . "' , '" . s:colors.airlinecolors.07[1] . "'],\n"
+        \   .  "\\\n"
+        \   .  "\\ '08' : ['" . s:colors.airlinecolors.08[0] . "' , '" . s:colors.airlinecolors.08[1] . "'],\n"
+        \   .  "\\ '09' : ['" . s:colors.airlinecolors.09[0] . "' , '" . s:colors.airlinecolors.09[1] . "'],\n"
+        \   .  "\\\n"
+        \   .  "\\ '0A' : ['" . s:colors.airlinecolors.0A[0] . "' , '" . s:colors.airlinecolors.0A[1] . "'],\n"
+        \   .  "\\ '0B' : ['" . s:colors.airlinecolors.0B[0] . "' , '" . s:colors.airlinecolors.0B[1] . "'],\n"
+        \   .  "\\\n"
+        \   .  "\\ '0C' : ['" . s:colors.airlinecolors.0C[0] . "' , '" . s:colors.airlinecolors.0C[1] . "'],\n"
+        \   .  "\\ '0D' : ['" . s:colors.airlinecolors.0D[0] . "' , '" . s:colors.airlinecolors.0D[1] . "'],\n"
+        \   .  "\\ }\n"
+
+    return s:string
 endfunction"}}}
 
