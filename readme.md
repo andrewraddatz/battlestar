@@ -1,5 +1,3 @@
-Battlestar Colors
-
 Because this packages relies on autloading to generate colors for both
 the main theme and for airline, you'll need to force loading in your
 .vimrc if you want to use it immediately
