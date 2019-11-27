@@ -360,6 +360,74 @@ function! battlestar#airlinecolorset(colors) "{{{
     return s:palette
 
 endfunction "}}}
+function! battlestar#lightlinecolorset(colors) "{{{
+
+    let s:p = {'normal': {}, 'inactive': {}, 'insert': {}, 'replace': {}, 'visual': {}, 'tabline': {}}
+
+    " Pattern
+    " 1 -> A/Z
+    " 2 -> B/Y
+    " 2 -> C/X
+    " FG GUI, BG GUI, FG TERM, BG TERM
+
+    " Everything
+    let s:L2   = [ [a:colors.00[1], a:colors.01[1]], [a:colors.00[0], a:colors.01[0] ]]
+    let s:L3   = [ [a:colors.02[1], a:colors.03[1]], [a:colors.02[0], a:colors.03[0] ]]
+
+    " Normal
+    let s:N1   = [ a:colors.04[1], a:colors.05[1], a:colors.04[0], a:colors.05[0] ]
+
+    " Insert
+    let s:I1   = [ a:colors.06[1], a:colors.07[1], a:colors.06[0], a:colors.07[0] ]
+
+    " Replace
+    let s:R1   = [ a:colors.08[1], a:colors.09[1], a:colors.08[0], a:colors.09[0] ]
+
+    " Visual
+    let s:V1   = [ a:colors.0A[1], a:colors.0B[1], a:colors.0A[0], a:colors.0B[0] ]
+
+    " Inactive
+    let s:A1   = [ a:colors.0C[1], a:colors.0D[1], a:colors.0C[0], a:colors.0D[0] ]
+
+    let s:nord0 = ["#2E3440", "NONE"]
+    let s:nord1 = ["#3B4252", 0]
+    let s:nord2 = ["#434C5E", "NONE"]
+    let s:nord3 = ["#4C566A", 8]
+    let s:nord4 = ["#D8DEE9", "NONE"]
+    let s:nord5 = ["#E5E9F0", 7]
+    let s:nord6 = ["#ECEFF4", 15]
+    let s:nord7 = ["#8FBCBB", 14]
+    let s:nord8 = ["#88C0D0", 6]
+    let s:nord9 = ["#81A1C1", 4]
+    let s:nord10 = ["#5E81AC", 12]
+    let s:nord11 = ["#BF616A", 1]
+    let s:nord12 = ["#D08770", 11]
+    let s:nord13 = ["#EBCB8B", 3]
+    let s:nord14 = ["#A3BE8C", 2]
+    let s:nord15 = ["#B48EAD", 5]
+
+    let s:p.normal.left = [ [ s:nord1, s:nord8 ], [ s:nord5, s:nord1 ] ]
+    let s:p.normal.middle = [ [ s:nord5, s:nord3 ] ]
+    let s:p.normal.right = [ [ s:nord5, s:nord1 ], [ s:nord5, s:nord1 ] ]
+    let s:p.normal.warning = [ [ s:nord1, s:nord13 ] ]
+    let s:p.normal.error = [ [ s:nord1, s:nord11 ] ]
+
+    let s:p.inactive.left =  [ [ s:nord1, s:nord8 ], [ s:nord5, s:nord1 ] ]
+    let s:p.inactive.middle = g:nord_uniform_status_lines == 0 ? [ [ s:nord5, s:nord1 ] ] : [ [ s:nord5, s:nord3 ] ]
+    let s:p.inactive.right = [ [ s:nord5, s:nord1 ], [ s:nord5, s:nord1 ] ]
+
+    let s:p.insert.left = [ [ s:nord1, s:nord6 ], [ s:nord5, s:nord1 ] ]
+    let s:p.replace.left = [ [ s:nord1, s:nord13 ], [ s:nord5, s:nord1 ] ]
+    let s:p.visual.left = [ [ s:nord1, s:nord7 ], [ s:nord5, s:nord1 ] ]
+
+    let s:p.tabline.left = [ [ s:nord5, s:nord3 ] ]
+    let s:p.tabline.middle = [ [ s:nord5, s:nord3 ] ]
+    let s:p.tabline.right = [ [ s:nord5, s:nord3 ] ]
+    let s:p.tabline.tabsel = [ [ s:nord1, s:nord8 ] ]
+
+    return lightline#colorscheme#flatten(s:p)
+
+endfunction "}}}
 function! battlestar#palette(theme, filler, misc)"{{{
     if len(a:theme) == 3
         let l:theme =  battlestar#theme_color_palette_homogeneous(a:theme[0], a:theme[1], a:theme[2])
@@ -394,22 +462,23 @@ function! battlestar#setpalette()"{{{
     if g:battlestar_shade == 1"{{{
         set background=dark
         let s:v = 90
+        let s:red = 0
     else
         set background=light
         let s:v = 60
+        let s:red = 20
     endif"}}}
 
     let g:battlestar#generated = 0
-    if g:battlestar_theme ==? 'condition one'
-        " color defs Generated Red{{{
+    if g:battlestar_theme ==? 'condition one'"{{{
         let g:battlestar#generated = 1
         let s:theme = [[20, 50, 290, 350, 110], 50, s:v]
         let s:bg = [12.6, 30, 6]
         let s:fg = [12.6, 10, 90]
         let s:misc = [[314, 50, 110], 50, 50]
         "}}}
-    elseif g:battlestar_theme ==? 'condition two'
-        " color defs Generated Green{{{
+    elseif g:battlestar_theme ==? 'condition two'"{{{
+        " color defs Generated two
         let g:battlestar#generated = 1
         let s:theme = [
             \   [190, 80, s:v], 
@@ -424,112 +493,78 @@ function! battlestar#setpalette()"{{{
             \   [ 50, 50, s:v-20], 
             \   [110, 50, s:v-20]]
         "}}}
-    elseif g:battlestar_theme ==? 'condition three'
-        " color defs Generated Blue{{{
+    elseif g:battlestar_theme ==? 'condition three'"{{{
         let g:battlestar#generated = 1
         let s:theme = [[220, 190,  100, 160, 130], 50, s:v]
         let s:bg = [214.6, 50, 6]
         let s:fg = [214.6, 10, 90]
         let s:misc = [[320, 50, 110], 50, 50]
         "}}}
-    elseif g:battlestar_theme ==? 'hard six'
-    " Picking Color Palette{{{
-    " grey01 -> close to background
-    " grey06 -> far from background
-    let s:colors = { 
-        \   'lightcolor'   : ['39'  , '#00afff'],
-        \   'brightcolor'  : ['45'  , '#00d7ff'],
-        \   'darkcolor'    : ['33'  , '#0087ff'],
-        \   'accentcolor'  : ['93'  , '#8700ff'],
-        \   'neutralcolor' : ['66'  , '#5f8787'],
-        \
-        \   'background'   : ['16'  , '#000000'],
-        \   'foreground'   : ['15'  , '#ffffff'],
-        \
-        \   'grey01'       : ['234' , '#1c1c1c'],
-        \   'grey02'       : ['239' , '#4e4e4e'],
-        \   'grey03'       : ['242' , '#6c6c6c'],
-        \   'grey04'       : ['245' , '#8a8a8a'],
-        \   'grey05'       : ['247' , '#9e9e9e'],
-        \   'grey06'       : ['253' , '#dadada'],
-        \
-        \   'add'          : ['196' , '#ff0000'],
-        \   'change'       : ['154' , '#afff00'],
-        \   'delete'       : ['22'  , '#005f00'],
-        \   }
-    let s:airlinecolors = {
-        \   '00' : s:colors.grey06,
-        \   '01' : s:colors.grey03,
-        \
-        \   '02' : s:colors.grey06,
-        \   '03' : s:colors.grey01,
-        \
-        \   '04' : s:colors.grey06,
-        \   '05' : s:colors.grey02,
-        \
-        \   '06' : s:colors.grey02,
-        \   '07' : s:colors.brightcolor,
-        \
-        \   '08' : s:colors.grey02,
-        \   '09' : s:colors.change,
-        \
-        \   '0A' : s:colors.grey06,
-        \   '0B' : s:colors.accentcolor,
-        \
-        \   '0C' : s:colors.grey02,
-        \   '0D' : s:colors.grey01,
-        \ }
-    "}}}
-    elseif g:battlestar_theme ==? 'hard eight'
-    " Picking Color Palette{{{
-    " grey01 -> close to background
-    " grey06 -> far from background
-    let s:colors = { 
-        \   'lightcolor'   : ['71'  , '#5faf5f'],
-        \   'brightcolor'  : ['29'  , '#00875f'],
-        \   'darkcolor'    : ['35'  , '#00af5f'],
-        \   'accentcolor'  : ['66'  , '#5f8787'],
-        \   'neutralcolor' : ['39'  , '#00afff'],
-        \
-        \   'background'   : ['16'  , '#000000'],
-        \   'foreground'   : ['15'  , '#ffffff'],
-        \
-        \   'grey01'       : ['234' , '#1c1c1c'],
-        \   'grey02'       : ['239' , '#4e4e4e'],
-        \   'grey03'       : ['242' , '#6c6c6c'],
-        \   'grey04'       : ['245' , '#505050'],
-        \   'grey05'       : ['247' , '#9e9e9e'],
-        \   'grey06'       : ['253' , '#dadada'],
-        \
-        \   'add'          : ['196' , '#ff0000'],
-        \   'change'       : ['154' , '#afff00'],
-        \   'delete'       : ['22'  , '#005f00'],
-        \   }
-    let s:airlinecolors = {
-        \   '00' : s:colors.grey06,
-        \   '01' : s:colors.grey03,
-        \
-        \   '02' : s:colors.grey06,
-        \   '03' : s:colors.grey01,
-        \
-        \   '04' : s:colors.grey06,
-        \   '05' : s:colors.grey02,
-        \
-        \   '06' : s:colors.grey02,
-        \   '07' : s:colors.brightcolor,
-        \
-        \   '08' : s:colors.grey02,
-        \   '09' : s:colors.change,
-        \
-        \   '0A' : s:colors.grey06,
-        \   '0B' : s:colors.accentcolor,
-        \
-        \   '0C' : s:colors.grey02,
-        \   '0D' : s:colors.grey01,
-        \ }
-    "}}}
-    elseif g:battlestar_theme ==? 'term'
-    " Picking Color Palette{{{
+    elseif g:battlestar_theme ==? 'pegasus'"{{{
+        let g:battlestar#generated = 1
+        let s:theme = [
+            \   [144.5, 37.7, 68.6-s:red], 
+            \   [192.1, 54.3, 87.1-s:red], 
+            \   [ 44.8, 68.9, 89.9-s:red],
+            \   [214.6, 65.3, 80.6-s:red], 
+            \   [150.7, 22.2, 81.1-s:red], 
+            \ ]
+        let s:bg = [247.1, 80.3, 15.3]
+        let s:fg = [208.8, 16.6, 100]
+        let s:misc = [
+            \   [354, 50, s:v-20], 
+            \   [ 50, 50, s:v-20], 
+            \   [110, 50, s:v-20]]
+        "}}}
+    elseif g:battlestar_theme ==? 'galactica'"{{{
+        let g:battlestar#generated = 1
+        let s:theme = [
+            \   [334.6, 55.3, 85.3-s:red], 
+            \   [143.1, 36.1, 86.7-s:red], 
+            \   [115.6, 43.7, 61.6-s:red], 
+            \   [193.6, 43.7, 100 -s:red], 
+            \   [ 40, 50, s:v],
+            \ ]
+        let s:bg = [242.9, 50.9, 15.7]
+        let s:fg = [347.1, 13.0, 100]
+        let s:misc = [
+            \   [354, 50, s:v-20], 
+            \   [ 50, 50, s:v-20], 
+            \   [110, 50, s:v-20]]
+        "}}}
+    elseif g:battlestar_theme ==? 'hard six'"{{{
+        let g:battlestar#generated = 1
+        let s:theme = [
+            \   [180.0, 29.6, 52.9-s:red], 
+            \   [189.4, 100 , 100 -s:red], 
+            \   [283.5, 84.4, 90.0-s:red], 
+            \   [198.8, 100 , 100 -s:red], 
+            \   [208.2, 100 , 100 -s:red],
+            \ ]
+        let s:bg = [  0  ,  0  ,   0]
+        let s:fg = [  0  ,  0  , 100]
+        let s:misc = [
+            \   [354, 50, s:v-20], 
+            \   [ 50, 50, s:v-20], 
+            \   [110, 50, s:v-20]]
+        "}}}
+    elseif g:battlestar_theme ==? 'hard eight'"{{{
+        let g:battlestar#generated = 1
+        let s:theme = [
+            \   [200.0, 100 , 100 -s:red], 
+            \   [162.2, 100 , 52.9-s:red], 
+            \   [180.0, 29.6, 52.9-s:red], 
+            \   [120.0, 45.7, 68.6-s:red], 
+            \   [152.6, 100 , 68.6-s:red],
+            \ ]
+        let s:bg = [  0  ,  0  ,   0]
+        let s:fg = [  0  ,  0  , 100]
+        let s:misc = [
+            \   [354, 50, s:v-20], 
+            \   [ 50, 50, s:v-20], 
+            \   [110, 50, s:v-20]]
+        "}}}
+    elseif g:battlestar_theme ==? 'term'"{{{
     " grey01 -> close to background
     " grey06 -> far from background
     let s:colors = { 
@@ -576,14 +611,6 @@ function! battlestar#setpalette()"{{{
         \   '0D' : s:colors.grey01,
         \ }
     "}}}
-    elseif g:battlestar_theme ==? 'the line'
-        " color defs Generated Saturated{{{
-        let g:battlestar#generated = 1
-        let s:theme = [[120, 30,  240, 0, 300], 100, 100]
-        let s:bg = [214.6, 0, 0]
-        let s:fg = [214.6, 0, 100]
-        let s:misc = [[320, 50, 110], 50, 50]
-        "}}}
     endif
     
     " Flip Colors{{{
