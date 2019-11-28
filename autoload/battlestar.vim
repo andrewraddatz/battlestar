@@ -502,14 +502,17 @@ function! battlestar#setpalette()"{{{
         "}}}
     elseif g:battlestar_theme ==? 'pegasus'"{{{
         let g:battlestar#generated = 1
+            " red
+            " \   [351.6, 60.9, 51.7-s:red],
         let s:theme = [
             \   [144.5, 37.7, 68.6-s:red], 
             \   [192.1, 54.3, 87.1-s:red], 
             \   [ 44.8, 68.9, 89.9-s:red],
-            \   [214.6, 65.3, 80.6-s:red], 
+            \   [214.6, 65.3, 80.6-s:red],
             \   [150.7, 22.2, 81.1-s:red], 
             \ ]
         let s:bg = [247.1, 80.3, 15.3]
+        " let s:bg = [247.1, 80.3, 10.3]
         let s:fg = [208.8, 16.6, 100]
         let s:misc = [
             \   [354, 50, s:v-20], 
@@ -518,12 +521,13 @@ function! battlestar#setpalette()"{{{
         "}}}
     elseif g:battlestar_theme ==? 'galactica'"{{{
         let g:battlestar#generated = 1
+            " \   [334.6, 55.3, 85.3-s:red], 
         let s:theme = [
-            \   [334.6, 55.3, 85.3-s:red], 
+            \   [  2.5, 71.8, 66.2-s:red], 
             \   [143.1, 36.1, 86.7-s:red], 
             \   [115.6, 43.7, 61.6-s:red], 
             \   [193.6, 43.7, 100 -s:red], 
-            \   [ 40, 50, s:v],
+            \   [ 32.9, 32.7, 98.4-s:red],
             \ ]
         let s:bg = [242.9, 50.9, 15.7]
         let s:fg = [347.1, 13.0, 100]
