@@ -193,6 +193,9 @@ function! battlestar#colorset(colors) "{{{
 
     call battlestar#setgroup(a:colors.grey05, s:clear, s:none)"{{{
     " call battlestar#highlight('Comment',               s:fg,  s:bg,  s:style)
+    call battlestar#highlight('Pmenu',                 s:fg, s:bg, s:style)
+    call battlestar#highlight('PMenuThumb',            s:fg, s:bg, s:style)
+    call battlestar#highlight('PMenuSbar',             s:fg, s:bg, s:style)
     "}}}
     call battlestar#setgroup(s:clear, a:colors.grey01, s:none)"{{{
     call battlestar#highlight('CursorLine',            s:fg, s:bg, s:style)
@@ -206,6 +209,7 @@ function! battlestar#colorset(colors) "{{{
     call battlestar#highlight('Number',                s:fg, s:bg, s:style)
     call battlestar#highlight('Boolean',               s:fg, s:bg, s:style)
     call battlestar#highlight('Float',                 s:fg, s:bg, s:style)
+    call battlestar#highlight('PMenuSel',              s:fg, s:bg, s:style)
     "}}}
     call battlestar#setgroup(a:colors.darkcolor, s:clear, s:none)"{{{
     call battlestar#highlight('Identifier',            s:fg, s:bg, s:style)
@@ -237,10 +241,12 @@ function! battlestar#colorset(colors) "{{{
     call battlestar#highlight('Special',               s:fg, s:bg, s:style)
     call battlestar#highlight('SpecialKey',            s:fg, s:bg, s:style)
     call battlestar#highlight('SpecialChar',           s:fg, s:bg, s:style)
-    call battlestar#highlight('Delimiter',             s:fg, s:bg, s:style)
     call battlestar#highlight('SpecialComment',        s:fg, s:bg, s:style)
     call battlestar#highlight('Debug',                 s:fg, s:bg, s:style)
     call battlestar#highlight('Underlined',            s:fg, s:bg, s:style)
+    "}}}
+    call battlestar#setgroup(a:colors.grey06, s:clear, s:none)"{{{
+    call battlestar#highlight('Delimiter',             s:fg, s:bg, s:style)
     "}}}
     call battlestar#setgroup(a:colors.background, a:colors.brightcolor, s:none)"{{{
     call battlestar#highlight('Error',                 s:fg, s:bg, s:style)
