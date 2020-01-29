@@ -262,7 +262,6 @@ function! battlestar#colorset(colors) "{{{
     " call battlestar#highlight('StatusLineNC',          s:fg, s:bg, s:style)
     " call battlestar#highlight('StatusLineTerm',        s:fg, s:bg, s:style)
     " call battlestar#highlight('StatusLineTermNC',      s:fg, s:bg, s:style)
-    " call battlestar#highlight('DiffText',              s:fg, s:bg, s:style)
     " call battlestar#highlight('ErrorMsg',              s:fg, s:bg, s:style)
     " call battlestar#highlight('IncSearch',             s:fg, s:bg, s:style)
     " call battlestar#highlight('Search',                s:fg, s:bg, s:style)
@@ -300,6 +299,15 @@ function! battlestar#colorset(colors) "{{{
     call battlestar#highlight('Conceal',               s:fg, s:bg, s:style)
 "}}}
 
+    " Managing Diffs
+    call battlestar#setgroup(a:colors.change, a:colors.grey01, s:none)"{{{
+    call battlestar#highlight('DiffText',              s:fg, s:bg, s:style)
+    "}}}
+    call battlestar#setgroup(a:colors.foreground, a:colors.grey01, s:none)"{{{
+    call battlestar#highlight('DiffChange',            s:fg, s:bg, s:style)
+    "}}}
+
+
     " Git
     call battlestar#setgroup(a:colors.add, s:clear, s:none)"{{{
     call battlestar#highlight('GitGutterAdd',          s:fg, s:bg, s:style)
@@ -307,7 +315,6 @@ function! battlestar#colorset(colors) "{{{
     "}}}
     call battlestar#setgroup(a:colors.change, s:clear, s:none)"{{{
     call battlestar#highlight('GitGutterChange',       s:fg, s:bg, s:style)
-    call battlestar#highlight('DiffChange',            s:fg, s:bg, s:style)
     "}}}
     call battlestar#setgroup(a:colors.delete, s:clear, s:none)"{{{
     call battlestar#highlight('GitGutterDelete',       s:fg, s:bg, s:style)
