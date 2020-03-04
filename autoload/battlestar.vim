@@ -242,6 +242,9 @@ function! battlestar#colorset(colors) "{{{
     call battlestar#highlight('Structure',             s:fg, s:bg, s:style)
     call battlestar#highlight('Typedef',               s:fg, s:bg, s:style)
     "}}}
+    call battlestar#setgroup(a:colors.neutralcolor, s:clear, s:none)"{{{
+    call battlestar#highlight('Comment',               s:fg,  s:bg,  s:style)
+"}}}
     call battlestar#setgroup(a:colors.grey03, s:clear, s:none)"{{{
     call battlestar#highlight('SpecialKey',            s:fg, s:bg, s:style)
     call battlestar#highlight('SpecialComment',        s:fg, s:bg, s:style)
@@ -258,10 +261,6 @@ function! battlestar#colorset(colors) "{{{
     "
     "
     " Figure these out
-    " call battlestar#highlight('StatusLine',            s:fg, s:bg, s:style)
-    " call battlestar#highlight('StatusLineNC',          s:fg, s:bg, s:style)
-    " call battlestar#highlight('StatusLineTerm',        s:fg, s:bg, s:style)
-    " call battlestar#highlight('StatusLineTermNC',      s:fg, s:bg, s:style)
     " call battlestar#highlight('ErrorMsg',              s:fg, s:bg, s:style)
     " call battlestar#highlight('IncSearch',             s:fg, s:bg, s:style)
     " call battlestar#highlight('Search',                s:fg, s:bg, s:style)
@@ -269,6 +268,25 @@ function! battlestar#colorset(colors) "{{{
     " call battlestar#highlight('MoreMsg',               s:fg, s:bg, s:style)
     " call battlestar#highlight('Question',              s:fg, s:bg, s:style)
     "
+
+    " User Colors{{{
+    call battlestar#setgroup(a:colors.grey02, a:colors.grey01, s:none)
+    call battlestar#highlight('User1',  s:fg, s:bg, s:style)
+    call battlestar#setgroup(a:colors.grey03, a:colors.grey01, s:none)
+    call battlestar#highlight('User2',  s:fg, s:bg, s:style)
+    call battlestar#setgroup(a:colors.grey04, a:colors.grey01, s:none)
+    call battlestar#highlight('User3',  s:fg, s:bg, s:style)
+    call battlestar#setgroup(a:colors.grey05, a:colors.grey01, s:none)
+    call battlestar#highlight('User4',  s:fg, s:bg, s:style)
+    call battlestar#setgroup(a:colors.grey06, a:colors.grey01, s:none)
+    call battlestar#highlight('User5',  s:fg, s:bg, s:style)
+
+    call battlestar#highlight('User6', s:colors.grey01, s:colors.add,    s:none) " insert
+    call battlestar#highlight('User7', s:colors.grey01, s:colors.delete, s:none) " replace
+    call battlestar#highlight('User8', s:colors.grey01, s:colors.change, s:none) " visual
+    call battlestar#highlight('User9', s:colors.grey06, s:colors.grey01, s:none) " normal
+
+"}}}
     
     " Interface highlighting
     call battlestar#setgroup(a:colors.foreground, a:colors.background, s:none)"{{{
@@ -280,15 +298,10 @@ function! battlestar#colorset(colors) "{{{
     call battlestar#highlight('iCursor',               s:fg, s:bg, s:style)
     call battlestar#highlight('vCursor',               s:fg, s:bg, s:style)
     "}}}
-    call battlestar#setgroup(s:none, s:clear, s:reverse)"{{{
-    call battlestar#highlight('Visual',                s:fg, s:bg, s:style)
-    call battlestar#highlight('iCursor',               s:fg, s:bg, s:style)
-    "}}}
     call battlestar#setgroup(a:colors.neutralcolor, s:clear, s:none)"{{{
     call battlestar#highlight('LineNr',                s:fg, s:bg, s:style)
     call battlestar#highlight('NonText',               s:fg, s:bg, s:style)
     call battlestar#highlight('VertSplit',             s:fg, s:bg, s:style)
-    call battlestar#highlight('Comment',               s:fg,  s:bg,  s:style)
     "}}}
     call battlestar#setgroup(a:colors.brightcolor, s:clear, s:none)"{{{
     call battlestar#highlight('CursorLineNr',          s:fg, s:bg, s:style)
@@ -297,6 +310,22 @@ function! battlestar#colorset(colors) "{{{
     call battlestar#highlight('Folded',                s:fg, s:bg, s:style)
     call battlestar#highlight('FoldColumn',            s:fg, s:bg, s:style)
     call battlestar#highlight('Conceal',               s:fg, s:bg, s:style)
+    call battlestar#highlight('TabLineSel',            s:fg, s:bg, s:style)
+"}}}
+    call battlestar#setgroup(s:none, s:clear, s:reverse)"{{{
+    call battlestar#highlight('Visual',                s:fg, s:bg, s:style)
+    call battlestar#highlight('iCursor',               s:fg, s:bg, s:style)
+    "}}}
+    call battlestar#setgroup(a:colors.grey06, a:colors.grey01, s:none)"{{{
+    call battlestar#highlight('StatusLine',            s:fg, s:bg, s:style)
+    call battlestar#highlight('StatusLineTerm',        s:fg, s:bg, s:style)
+    call battlestar#highlight('TabLine',               s:fg, s:bg, s:style)
+    call battlestar#highlight('TabLineFill',           s:fg, s:bg, s:style)
+
+"}}}
+    call battlestar#setgroup(a:colors.grey03, a:colors.grey01, s:none)"{{{
+    call battlestar#highlight('StatusLineNC',          s:fg, s:bg, s:style)
+    call battlestar#highlight('StatusLineTermNC',      s:fg, s:bg, s:style)
 "}}}
 
     " Managing Diffs
@@ -469,7 +498,7 @@ function! battlestar#setpalette()"{{{
         let g:battlestar_theme="term"
     endif"}}}
     if !exists('g:battlestar_theme')"{{{
-        let g:battlestar_theme="condition two"
+        let g:battlestar_theme="condition two init"
     endif"}}}
     if !exists('g:battlestar_shade')"{{{
         let g:battlestar_shade=1
@@ -491,6 +520,60 @@ function! battlestar#setpalette()"{{{
         let s:bg = [12.6, 30, 6]
         let s:fg = [12.6, 10, 90]
         let s:misc = [[314, 50, 110], 50, 50]
+        "}}}
+    elseif g:battlestar_theme ==? 'condition two init'"{{{
+        " color defs Generated two
+        let g:battlestar#generated = 0
+        " I was getting annoyed at waiting for it to calculate
+        " these colors when starting up vim.
+        "
+        " These colors are equivalent to Condtion2
+        " retrieved via battlestar#printscheme()
+        
+        let s:colors = {
+        \ 'lightcolor'   : ['120' , '#80ff95'],
+        \ 'brightcolor'  : ['156' , '#aaff80'],
+        \ 'darkcolor'    : ['222' , '#ffd480'],
+        \ 'accentcolor'  : ['192' , '#eaff80'],
+        \ 'neutralcolor' : ['81' , '#33ddff'],
+        \
+        \ 'background'   : ['232' , '#0b0f0b'],
+        \ 'foreground'   : ['252' , '#cfe6cf'],
+        \
+        \ 'grey01'       : ['235' , '#272d27'],
+        \ 'grey02'       : ['238' , '#434c43'],
+        \ 'grey03'       : ['59' , '#5f6b5f'],
+        \ 'grey04'       : ['244' , '#7b897b'],
+        \ 'grey05'       : ['247' , '#97a897'],
+        \ 'grey06'       : ['249' , '#b3c7b3'],
+        \
+        \ 'add'          : ['113' , '#77cc66'],
+        \ 'change'       : ['179' , '#ccbb66'],
+        \ 'delete'       : ['167' , '#cc6670'],
+        \ }
+        
+        let s:airlinecolors = {
+        \ '00' : ['235' , '#272d27'],
+        \ '01' : ['247' , '#97a897'],
+        \
+        \ '02' : ['249' , '#b3c7b3'],
+        \ '03' : ['235' , '#272d27'],
+        \
+        \ '04' : ['249' , '#b3c7b3'],
+        \ '05' : ['238' , '#434c43'],
+        \
+        \ '06' : ['238' , '#434c43'],
+        \ '07' : ['156' , '#aaff80'],
+        \
+        \ '08' : ['238' , '#434c43'],
+        \ '09' : ['179' , '#ccbb66'],
+        \
+        \ '0A' : ['238' , '#434c43'],
+        \ '0B' : ['192' , '#eaff80'],
+        \
+        \ '0C' : ['244' , '#7b897b'],
+        \ '0D' : ['235' , '#272d27'],
+        \ }
         "}}}
     elseif g:battlestar_theme ==? 'condition two'"{{{
         " color defs Generated two

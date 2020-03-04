@@ -1,7 +1,7 @@
 " File              : battlestar.vim
-" Author            : Andrew Raddatz <andrewraddatz@gmail.com>
-" Date              : Thu  7 Feb 09:33:20 2019
-" Last Modified Date: Thu  7 Feb 09:33:20 2019
+" Author            : Andrew Raddatz <andrewraddatz@gmail.com>G
+" Date              : 07 Feb 2019
+" Last Modified Date: 03 Mar 2020
 " Last Modified By  : Andrew Raddatz <andrewraddatz@gmail.com>
 
 highlight clear
@@ -11,5 +11,6 @@ endif
 
 let g:colors_name = "battlestar"
 
-call battlestar#colorset(battlestar#setpalette())
 
+call battlestar#colorset(battlestar#setpalette())
+" call battlestar#airlinecolorset(s:airlinecolors)
