@@ -228,6 +228,13 @@ function! battlestar#colorset(colors) "{{{
     call battlestar#highlight('Exception',             s:fg, s:bg, s:style)
     call battlestar#highlight('Directory',             s:fg, s:bg, s:style)
     "}}}
+    call battlestar#setgroup(a:colors.background, a:colors.darkcolor, s:none)"{{{
+    call battlestar#highlight('Search',                s:fg, s:bg, s:style)
+    "}}}
+    call battlestar#setgroup(a:colors.background, a:colors.neutralcolor, s:none)"{{{
+    call battlestar#highlight('IncSearch',             s:fg, s:bg, s:style)
+    "}}}
+
     call battlestar#setgroup(a:colors.lightcolor, s:clear, s:none)"{{{
     call battlestar#highlight('PreProc',               s:fg, s:bg, s:style)
     call battlestar#highlight('Include',               s:fg, s:bg, s:style)
@@ -258,33 +265,32 @@ function! battlestar#colorset(colors) "{{{
     call battlestar#highlight('Error',                 s:fg, s:bg, s:style)
     call battlestar#highlight('Todo',                  s:fg, s:bg, s:style)
     "}}}
-    "
-    "
+
     " Figure these out
     " call battlestar#highlight('ErrorMsg',              s:fg, s:bg, s:style)
-    " call battlestar#highlight('IncSearch',             s:fg, s:bg, s:style)
-    " call battlestar#highlight('Search',                s:fg, s:bg, s:style)
     " call battlestar#highlight('ModeMsg',               s:fg, s:bg, s:style)
     " call battlestar#highlight('MoreMsg',               s:fg, s:bg, s:style)
     " call battlestar#highlight('Question',              s:fg, s:bg, s:style)
-    "
 
     " User Colors{{{
-    call battlestar#setgroup(a:colors.grey02, a:colors.grey01, s:none)
-    call battlestar#highlight('User1',  s:fg, s:bg, s:style)
-    call battlestar#setgroup(a:colors.grey03, a:colors.grey01, s:none)
-    call battlestar#highlight('User2',  s:fg, s:bg, s:style)
-    call battlestar#setgroup(a:colors.grey04, a:colors.grey01, s:none)
-    call battlestar#highlight('User3',  s:fg, s:bg, s:style)
-    call battlestar#setgroup(a:colors.grey05, a:colors.grey01, s:none)
-    call battlestar#highlight('User4',  s:fg, s:bg, s:style)
-    call battlestar#setgroup(a:colors.grey06, a:colors.grey01, s:none)
-    call battlestar#highlight('User5',  s:fg, s:bg, s:style)
+    " for status lines
+    call battlestar#highlight('User1', a:colors.grey02, a:colors.grey01, s:none) " faint
+    call battlestar#highlight('User2', a:colors.grey03, a:colors.grey01, s:none) "   |
+    call battlestar#highlight('User3', a:colors.grey04, a:colors.grey01, s:none) "   |
+    call battlestar#highlight('User4', a:colors.grey05, a:colors.grey01, s:none) "   v
+    call battlestar#highlight('User5', a:colors.grey06, a:colors.grey01, s:none) " distinct
 
     call battlestar#highlight('User6', s:colors.grey01, s:colors.add,    s:none) " insert
     call battlestar#highlight('User7', s:colors.grey01, s:colors.delete, s:none) " replace
     call battlestar#highlight('User8', s:colors.grey01, s:colors.change, s:none) " visual
     call battlestar#highlight('User9', s:colors.grey06, s:colors.grey01, s:none) " normal
+
+    call battlestar#highlight('ins_rev', s:colors.add,    s:colors.grey01, s:none) " insert-reverse
+    call battlestar#highlight('rep_rev', s:colors.delete, s:colors.grey01, s:none) " replace-reverse
+    call battlestar#highlight('vis_rev', s:colors.change, s:colors.grey01, s:none) " visual-reverse
+    call battlestar#highlight('nor_nor', s:colors.grey06, s:colors.grey01, s:none) " normal-reverse
+    call battlestar#highlight('nor_rev', s:colors.grey01, s:colors.grey06, s:none) " normal-reverse
+    call battlestar#highlight('sta_rev', a:colors.grey01, a:colors.grey06, s:none) " status-rev
 
 "}}}
     
@@ -336,7 +342,6 @@ function! battlestar#colorset(colors) "{{{
     call battlestar#highlight('DiffChange',            s:fg, s:bg, s:style)
     "}}}
 
-
     " Git
     call battlestar#setgroup(a:colors.add, s:clear, s:none)"{{{
     call battlestar#highlight('GitGutterAdd',          s:fg, s:bg, s:style)
@@ -358,6 +363,7 @@ function! battlestar#colorset(colors) "{{{
     call battlestar#setgroup(a:colors.grey03, s:clear, s:none)"{{{
     call battlestar#highlight('vimOption',             s:fg, s:bg, s:style)
     "}}}
+
     " Spelling
 "{{{
     call battlestar#highlight('SpellBad',              a:colors.delete,         s:clear,        s:none)
