@@ -500,9 +500,9 @@ function! battlestar#palette(theme, filler, misc)"{{{
     return l:theme
 endfunction"}}}
 function! battlestar#setpalette()"{{{
-    if has("win32") && !has("gui_running")"{{{
-        let g:battlestar_theme="term"
-    endif"}}}
+    " if has("win32") && !has("gui_running")"{{{
+    "     let g:battlestar_theme="term"
+    " endif"}}}
     if !exists('g:battlestar_theme')"{{{
         let g:battlestar_theme="condition two init"
     endif"}}}
@@ -826,6 +826,7 @@ function! battlestar#printscheme()"{{{
         \   .  "\\ '0D' : ['" . s:colors.airlinecolors.0D[0] . "' , '" . s:colors.airlinecolors.0D[1] . "'],\n"
         \   .  "\\ }\n"
 
+    echo s:string
     return s:string
 endfunction"}}}
 
