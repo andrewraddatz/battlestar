@@ -1,7 +1,7 @@
-" File              : battlestar.vim
+" File              : condition2.vim
 " Author            : Andrew Raddatz <andrewraddatz@gmail.com>
-" Date              : 07 Feb 2019
-" Last Modified Date: 03 Mar 2020
+" Date              : 16 Jun 2021
+" Last Modified Date: 16 Jun 2021
 " Last Modified By  : Andrew Raddatz <andrewraddatz@gmail.com>
 
 highlight clear
