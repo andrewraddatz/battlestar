@@ -261,7 +261,7 @@ function! battlestar#colorset(colors) "{{{
     call battlestar#setgroup(a:colors.grey06, s:clear, s:none)"{{{
     call battlestar#highlight('Delimiter',             s:fg, s:bg, s:style)
     "}}}
-    call battlestar#setgroup(a:colors.grey05, a:colors.grey03, s:none)"{{{
+    call battlestar#setgroup(a:colors.brightcolor, a:colors.grey02, s:none)"{{{
     call battlestar#highlight('Error',                 s:fg, s:bg, s:style)
     call battlestar#highlight('Todo',                  s:fg, s:bg, s:style)
     "}}}
@@ -280,16 +280,19 @@ function! battlestar#colorset(colors) "{{{
     call battlestar#highlight('User4', a:colors.grey05, a:colors.grey01, s:none) "   v
     call battlestar#highlight('User5', a:colors.grey06, a:colors.grey01, s:none) " distinct
 
-    call battlestar#highlight('User6', s:colors.grey01, s:colors.add,    s:none) " insert
-    call battlestar#highlight('User7', s:colors.grey01, s:colors.delete, s:none) " replace
-    call battlestar#highlight('User8', s:colors.grey01, s:colors.change, s:none) " visual
-    call battlestar#highlight('User9', s:colors.grey06, s:colors.grey01, s:none) " normal
+    call battlestar#highlight('ins_nor', s:colors.grey01, s:colors.add,    s:none) " insert
+    call battlestar#highlight('rep_nor', s:colors.grey01, s:colors.delete, s:none) " replace
+    call battlestar#highlight('vis_nor', s:colors.grey01, s:colors.change, s:none) " visual
+    call battlestar#highlight('nor_nor', s:colors.grey01, s:colors.neutralcolor, s:none) " normal
+    call battlestar#highlight('com_nor', s:colors.grey01, s:colors.grey04, s:none) " command
+    call battlestar#highlight('git_nor', s:colors.grey06, s:colors.grey01, s:none) " git
 
     call battlestar#highlight('ins_rev', s:colors.add,    s:colors.grey01, s:none) " insert-reverse
     call battlestar#highlight('rep_rev', s:colors.delete, s:colors.grey01, s:none) " replace-reverse
     call battlestar#highlight('vis_rev', s:colors.change, s:colors.grey01, s:none) " visual-reverse
-    call battlestar#highlight('nor_nor', s:colors.grey06, s:colors.grey01, s:none) " normal-reverse
-    call battlestar#highlight('nor_rev', s:colors.grey01, s:colors.grey06, s:none) " normal-reverse
+    call battlestar#highlight('nor_rev', s:colors.neutralcolor, s:colors.grey01, s:none) " normal-reverse
+    call battlestar#highlight('com_rev', s:colors.grey04, s:colors.grey01, s:none) " command-reverse
+    call battlestar#highlight('git_rev', s:colors.grey01, s:colors.grey06, s:none) " git-reverse
     call battlestar#highlight('sta_rev', a:colors.grey01, a:colors.grey06, s:none) " status-rev
 
 "}}}
@@ -366,10 +369,17 @@ function! battlestar#colorset(colors) "{{{
 
     " Spelling
 "{{{
-    call battlestar#highlight('SpellBad',              a:colors.delete,         s:clear,        s:none)
-    call battlestar#highlight('SpellCap',              a:colors.neutralcolor,   s:clear,        s:none)
-    call battlestar#highlight('SpellLocal',            a:colors.add,            s:clear,        s:none)
-    call battlestar#highlight('SpellRare',             a:colors.accentcolor,    s:clear,        s:none)
+    if has("gui_running")
+        call battlestar#highlight('SpellBad',              [a:colors.delete[0],       'NONE'],  s:clear, ['NONE', 'undercurl guisp=' . a:colors.delete[1]])
+        call battlestar#highlight('SpellCap',              [a:colors.neutralcolor[0], 'NONE'],  s:clear, ['NONE', 'undercurl guisp=' . a:colors.neutralcolor[1]])
+        call battlestar#highlight('SpellLocal',            [a:colors.add[0],          'NONE'],  s:clear, ['NONE', 'undercurl guisp=' . a:colors.add[1]])
+        call battlestar#highlight('SpellRare',             [a:colors.accentcolor[0],  'NONE'],  s:clear, ['NONE', 'undercurl guisp=' . a:colors.accentcolor[1]])
+    else
+        call battlestar#highlight('SpellBad',              a:colors.delete, s:clear, ['NONE', 'undercurl guisp=' . a:colors.delete[1]])
+        call battlestar#highlight('SpellCap',              a:colors.neutralcolor, s:clear, ['NONE', 'undercurl guisp=' . a:colors.neutralcolor[1]])
+        call battlestar#highlight('SpellLocal',            a:colors.add, s:clear, ['NONE', 'undercurl guisp=' . a:colors.add[1]])
+        call battlestar#highlight('SpellRare',             a:colors.accentcolor, s:clear, ['NONE', 'undercurl guisp=' . a:colors.accentcolor[1]])
+    end
     "}}}
 
 endfunction "}}}
