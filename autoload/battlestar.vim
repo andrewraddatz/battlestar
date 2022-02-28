@@ -332,6 +332,7 @@ function! battlestar#colorset(colors) "{{{
     call battlestar#highlight('TabLineFill',           s:fg, s:bg, s:style)
 
 "}}}
+    call battlestar#highlight('WildMenu',            a:colors.accentcolor, a:colors.grey01, s:style)
     call battlestar#setgroup(a:colors.grey03, a:colors.grey01, s:none)"{{{
     call battlestar#highlight('StatusLineNC',          s:fg, s:bg, s:style)
     call battlestar#highlight('StatusLineTermNC',      s:fg, s:bg, s:style)
@@ -514,7 +515,7 @@ function! battlestar#setpalette()"{{{
     "     let g:battlestar_theme="term"
     " endif"}}}
     if !exists('g:battlestar_theme')"{{{
-        let g:battlestar_theme="condition two init"
+        let g:battlestar_theme="condition two"
     endif"}}}
     if !exists('g:battlestar_shade')"{{{
         let g:battlestar_shade=1

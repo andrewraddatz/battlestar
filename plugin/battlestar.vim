@@ -1,40 +1,12 @@
-function! ConditionOne()"{{{
-    let g:battlestar_theme = 'condition one'
-    color battlestar
-endfunction"}}}
-function! ConditionTwo()"{{{
-    let g:battlestar_theme = 'condition two'
-    color battlestar
-endfunction"}}}
-function! ConditionThree()"{{{
-    let g:battlestar_theme = 'condition three'
-    color battlestar
-endfunction"}}}
-command! Condition1     :call ConditionOne()
-command! Condition2     :call ConditionTwo()
-command! Condition3     :call ConditionThree()
+command! Condition1     :color condition1
+command! Condition2     :color condition2
+command! Condition3     :color condition3
 
-function! HardSix()"{{{
-    let g:battlestar_theme = 'hard six'
-    color battlestar
-endfunction"}}}
-function! HardEight()"{{{
-    let g:battlestar_theme = 'hard eight'
-    color battlestar
-endfunction"}}}
-command! HardSix        :call HardSix()
-command! HardEight      :call HardEight()
+command! HardSix        :color hardsix
+command! HardEight      :color hardeight
 
-function! Galactica()"{{{
-    let g:battlestar_theme = 'galactica'
-    color battlestar
-endfunction"}}}
-function! Pegasus()"{{{
-    let g:battlestar_theme = 'pegasus'
-    color battlestar
-endfunction"}}}
-command! Galactica      :call Galactica()
-command! Pegasus        :call Pegasus()
+command! Galactica      :color galactica
+command! Pegasus        :color pegasus
 
 function! ActionStations()"{{{
     let g:battlestar_shade = 0

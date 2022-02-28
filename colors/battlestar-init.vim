@@ -1,7 +1,7 @@
-" File              : battlestar.vim
+" File              : battlestar-init.vim
 " Author            : Andrew Raddatz <andrewraddatz@gmail.com>
-" Date              : 07 Feb 2019
-" Last Modified Date: 03 Mar 2020
+" Date              : 16 Jun 2021
+" Last Modified Date: 16 Jun 2021
 " Last Modified By  : Andrew Raddatz <andrewraddatz@gmail.com>
 
 highlight clear
@@ -9,6 +9,7 @@ if exists('syntax_on')
   syntax reset
 endif
 
+let g:battlestar_theme = "condition two init"
 let g:colors_name = "battlestar"
 
 call battlestar#colorset(battlestar#setpalette())
